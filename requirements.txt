@@ -5,4 +5,6 @@ matplotlib==3.9.2
 prophet==1.1.5
 scikit-learn==1.2.2
 numpy==1.26.4
-statsmodels==0
+statsmodels==0.14.0
+Cython==0.29.36
+pystan==2.19.1.1

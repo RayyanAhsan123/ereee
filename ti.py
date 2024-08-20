@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 # Set up your API and base URL for fetching data
 api_key = "l333ljg4122qws9kxkb4hly7a8dje27vk46c7zkceih11wmnrj7lqreku176"
 base_url = "https://metals-api.com/api"
-
+str
 # Function to fetch data for a given timeframe, splitting into chunks if necessary
 def fetch_data(start_date, end_date):
     date_format = "%Y-%m-%d"
