@@ -106,10 +106,6 @@ if data:
     st.subheader("📈 Tin Price Over Time")
     st.line_chart(df.set_index('ds')['y'])
 
-    # Handle missing values
-    st.write("Missing values before filling:", df.isnull().sum().to_dict())
-    df.fillna(method='ffill', inplace=True)
-    st.write("Missing values after filling:", df.isnull().sum().to_dict())
 
     # Prophet model training and forecasting
     st.subheader("🔮 Prophet Forecast")

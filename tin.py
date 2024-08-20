@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 api_key = "l333ljg4122qws9kxkb4hly7a8dje27vk46c7zkceih11wmnrj7lqreku176"
 base_url = "https://metals-api.com/api"
 
-
 # Function to fetch data for a given timeframe, splitting into chunks if necessary
 def fetch_data(start_date, end_date):
     date_format = "%Y-%m-%d"
@@ -49,7 +48,6 @@ def fetch_data(start_date, end_date):
 
     return all_data if all_data else None
 
-
 # Streamlit App Configuration
 st.set_page_config(page_title="Tin Price Prediction", layout="wide")
 
@@ -64,6 +62,11 @@ with st.sidebar:
     # User input for date range
     start_date = st.date_input("Start Date", datetime(2024, 7, 1))
 
+    # Convert start_date to datetime.datetime if necessary
+    if isinstance(start_date, datetime):
+        start_date = start_date.date()
+    start_date = datetime.combine(start_date, datetime.min.time())
+
     # User input for prediction period
     prediction_period = st.selectbox("Select Prediction Period", ["1-6 Months", "3 Months", "Custom"])
 
@@ -75,9 +78,17 @@ with st.sidebar:
         custom_period = st.number_input("Enter the number of days for prediction", min_value=1, value=30)
         prediction_days = custom_period
 
+    # Set the max end date to 2024-12-31
+    max_end_date = datetime(2024, 12, 31)
+
     # Calculate end date based on selected period
-    end_date = start_date + timedelta(days=prediction_days)
-    st.write(f"Selected end date for prediction: {end_date.strftime('%Y-%m-%d')}")
+    try:
+        # Extend the end date calculation until December 31, 2024
+        proposed_end_date = start_date + timedelta(days=int(prediction_days))
+        end_date = min(proposed_end_date, max_end_date)
+        st.write(f"Selected end date for prediction: {end_date.strftime('%Y-%m-%d')}")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 # Convert dates to strings for API
 start_date_str = start_date.strftime('%Y-%m-%d')
